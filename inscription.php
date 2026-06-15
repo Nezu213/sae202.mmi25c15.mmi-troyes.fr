@@ -35,7 +35,7 @@ $success = isset($_GET['success']);
     <?php if ($success): ?>
         <div class="cadre-formulaire" style="text-align:center;">
             <p style="color:#c8e6c9; font-size:1.1rem; margin-bottom:20px;">
-                ✅ Compte créé avec succès ! Vous pouvez maintenant vous connecter.
+                Compte créé avec succès ! Vous pouvez maintenant vous connecter.
             </p>
             <a href="connexion.php" class="btn-reserver" style="display:inline-block;">Se connecter</a>
         </div>

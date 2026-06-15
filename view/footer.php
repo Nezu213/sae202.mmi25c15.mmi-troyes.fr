@@ -2,7 +2,7 @@
     <img src="images/all_agency.png" alt="Logo All Agency" class="logo-agence">
     <p>© 2026 - Tous droits réservés. Projet IUT - SAE 202</p>
     <div class="footer-liens">
-    <a href="mentions_legales.php">Mentions Légales</a>
+        <a href="mentions_legales.php">Mentions Légales</a>
     </div>
 </footer>
 

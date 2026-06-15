@@ -1,4 +1,11 @@
-<?php include_once("view/bdd.php"); ?>
+<?php
+// On démarre la session seulement si elle n'est pas déjà active.
+// C'est la première chose à faire pour éviter les erreurs "headers already sent".
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+include_once("view/bdd.php"); 
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -34,20 +41,70 @@ $body_class = ($page == 'index.php') ? 'home' : '';
         </a>
     </div>
     <nav>
-        <ul>
-            <li><a href="index.php">Accueil</a></li>
-            <li><a href="concept.php">Concept</a></li>
-            <li><a href="infos_pratiques.php">Infos Pratiques</a></li>
-            <li><a href="reservation.php">Réservation</a></li>
+        <ul class="nav-icones">
+            <li>
+                <a href="index.php" class="lien-icone" title="Accueil">
+                    <img src="images/icone_accueil.png" alt="Accueil" class="icon-nav">
+                    <span class="tooltip-nav">Accueil</span>
+                </a>
+            </li>
+            <li>
+                <a href="concept.php" class="lien-icone" title="Concept">
+                    <img src="images/icone_concept.png" alt="Concept" class="icon-nav">
+                    <span class="tooltip-nav">Concept</span>
+                </a>
+            </li>
+            <li>
+                <a href="infos_pratiques.php" class="lien-icone" title="Informations pratiques">
+                    <img src="images/icone_infos.png" alt="Informations pratiques" class="icon-nav">
+                    <span class="tooltip-nav">Informations</span>
+                </a>
+            </li>
             <li class="profile-menu">
-                <a href="#" class="lien-profil" title="Connexion / Profil">
-                    <img src="images/profil.png" alt="Profil" width="24" height="24" class="icon-profil">
+                <a href="#" class="lien-icone" title="Connexion / Profil">
+                    <img src="images/icone_connexion.png" alt="Connexion" class="icon-nav">
+                    <span class="tooltip-nav">Connexion</span>
                 </a>
                 <div class="dropdown-content">
-                    <a href="connexion.php">Connexion</a>
-                    <a href="inscription.php">Inscription</a>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <a href="profil.php">Mon profil</a>
+                        <a href="reservation.php">Réservation</a>
+                        <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
+                            <a href="admin.php">Administration</a>
+                        <?php endif; ?>
+                        <a href="deconnexion.php">Déconnexion</a>
+                    <?php else: ?>
+                        <a href="connexion.php">Connexion</a>
+                        <a href="inscription.php">Inscription</a>
+                    <?php endif; ?>
                 </div>
             </li>
         </ul>
     </nav>
 </header>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const profileMenu = document.querySelector('.profile-menu');
+    if (profileMenu) {
+        const dropdown = profileMenu.querySelector('.dropdown-content');
+
+        profileMenu.addEventListener('click', function(event) {
+            // S'assurer que le clic vient bien de l'icône principale et non d'un lien dans le dropdown
+            if (event.target.closest('a.lien-icone')) {
+                event.preventDefault();
+                dropdown.classList.toggle('show');
+            }
+        });
+
+        // Fermer le menu si on clique n'importe où ailleurs sur la page
+        window.addEventListener('click', function(event) {
+            if (!profileMenu.contains(event.target)) {
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        });
+    }
+});
+</script>
