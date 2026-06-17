@@ -1,0 +1,2995 @@
+/* --- Styles pour le menu déroulant du profil (version JS) --- */
+.profile-menu {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none; /* Caché par défaut */
+    position: absolute;
+    right: 0;
+    top: calc(100% + 10px); /* Un peu d'espace sous l'icône */
+    background-color: #1a1a1a;
+    min-width: 180px;
+    box-shadow: 0px 10px 25px rgba(0,0,0,0.5);
+    z-index: 1000;
+    border-radius: 5px;
+    padding: 8px 0;
+    border: 1px solid #444;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+}
+
+.dropdown-content.show {
+    display: block; /* Affiché par JS */
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.dropdown-content a {
+    color: #E6C2C2;
+    padding: 12px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    text-align: left;
+    transition: background-color 0.2s;
+}
+
+.dropdown-content a:hover {
+    background-color: #8B0000;
+    color: #fff;
+}
+/* ==========================================================================
+   NIGHT CASINO — style.css complet avec effets de lueur
+   ========================================================================== */
+
+/* 1. VARIABLES & RESET
+   ========================================================================== */
+:root {
+    --bg-outer-dark:    #0a0a0a;
+    --burgundy-dark:    #1a0101;
+    --burgundy-mid:     #2d0505;
+    --burgundy-bright:  #7a1510;
+    --casino-gold:      #ecd499;
+    --casino-gold-dim:  #c9b47a;
+    --text-dark:        #1a0101;
+    --text-light:       #ecd499;
+    --text-soft:        #f5e3be;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background-color: var(--bg-outer-dark); /* Ton noir profond par défaut */
+    color: var(--text-light);
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.8;
+}
+
+/* 2. Ta règle spécifique pour LA page précise */
+body.page-reservation-bg {
+    background-image: url('images/back_reserv.png') !important;
+    background-size: cover;       /* L'image s'ajuste pour couvrir tout l'écran */
+    background-position: center;  /* L'image est centrée */
+    background-repeat: no-repeat; /* Évite que l'image se répète en mosaïque */
+    background-attachment: fixed; /* Optionnel : l'arrière-plan reste fixe au défilement */
+}
+
+body.page-reservation-bg main {
+    background-color: transparent !important;
+    box-shadow: none !important; /* Enleve l'ombre noire si elle gêne */
+}
+
+/* ==========================================================================
+   2. PRELOADER — Désactivé sur l'accueil pour uniformiser le header
+   ========================================================================== */
+#preloader {
+    display: none !important; /* On cache complètement le bloc preloader/hero au milieu */
+}
+
+body.home #preloader {
+    display: none !important;
+}
+
+body.home > header {
+    display: flex !important;
+}
+
+.preloader-logo {
+    max-width: 220px;
+    width: 60%;
+}
+
+.preloader-nav {
+    display: none !important; 
+}
+
+/* ==========================================================================
+   3. HEADER
+   ========================================================================== */
+header {
+    background-color: #0a0a0a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 70px;
+    border-bottom: 1px solid rgba(236, 212, 153, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header .logo img { height: 80px; }
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: var(--casino-gold);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.3s, border-color 0.3s;
+    padding: 5px 15px;
+    border-bottom: 1px solid transparent;
+}
+
+header nav ul li a:hover { 
+    color: #fff;
+    border-color: #fff;
+}
+
+.lien-profil { display: flex; align-items: center; }
+
+.icon-profil {
+    width: 24px; height: 24px;
+    fill: var(--casino-gold);
+    transition: fill 0.3s;
+}
+.lien-profil:hover .icon-profil { fill: #fff; }
+
+/* ==========================================================================
+   4. MAIN
+   ========================================================================== */
+main {
+    flex: 1;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    background-color: var(--burgundy-dark);
+    color: var(--text-light);
+    padding: 80px 10%; /* Augmentation des marges intérieures */
+    display: flex;
+    flex-direction: column;
+    gap: 80px; /* Plus d'espace entre les sections */
+    box-shadow: 0 0 60px rgba(0,0,0,0.8);
+}
+
+/* ==========================================================================
+   5. TYPOGRAPHIE (Avec effet mystérieux au survol)
+   ========================================================================== */
+h2, h3, h4 {
+    font-family: 'Cinzel Decorative', serif;
+    text-align: center;
+    color: var(--casino-gold);
+    text-transform: uppercase;
+}
+
+h2 { 
+    font-size: 32px; 
+    letter-spacing: 5px; 
+    margin-bottom: 20px;
+    color: var(--casino-gold);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Ajoute un léger relief pour le contraste */
+}
+
+
+h3 { 
+    font-size: 22px; 
+    letter-spacing: 2px; 
+    margin-bottom: 15px;
+    color: var(--casino-gold);
+}
+
+h4 { font-size: 16px; letter-spacing: 2px; }
+
+p { 
+    line-height: 1.9;
+    color: var(--text-soft); 
+    margin-bottom: 20px;
+}
+
+/* Séparateur doré */
+.separateur-or {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--casino-gold), transparent);
+    margin: 0 auto 30px;
+}
+
+/* ==========================================================================
+   6. CADRES DÉCORATIFS PNG
+   ========================================================================== */
+.page-reservation-unique {
+    /* Correction du chemin : on remonte d'un dossier avec ../ pour sortir de css/ */
+    background: linear-gradient(135deg, rgba(88, 14, 23, 0.8), rgba(22, 5, 8, 0.88)), url('../images/back_reservV2.jpg') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    padding: 80px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-reservation {
+    width: 100%;
+    max-width: 850px; /* Augmenté de 650px à 850px pour agrandir le cadre */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titre-reservation {
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: 700;
+    color: #ecd499;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+    font-size: 2.8rem;
+    letter-spacing: 3px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* Double texture élargie : Cadre d'épines + fond rouge opaque */
+.wrapper-cadre-reservation-epines {
+    background-image: url('../images/cadre-epinesV2.png'), url('../images/fond_rougeV2.png');
+    background-repeat: no-repeat, no-repeat;
+    background-size: 100% 100%, 100% 100%;
+    background-position: center, center;
+    width: 100%;
+    padding: 90px 80px; /* Augmenté pour donner de l'espace à l'intérieur */
+    box-sizing: border-box;
+}
+
+.wrapper-cadre-reservation-epines form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.row-inputs-double {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.input-group-reservation {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.input-group-reservation.full-width {
+    width: 100%;
+    flex: none;
+}
+
+.input-group-reservation label {
+    color: #ecd499;
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+/* Formes asymétriques beiges pour les inputs */
+.input-group-reservation .input-moyen {
+    background: url('../images/moyen_rect.png') no-repeat center center;
+    background-size: 100% 100%;
+    border: none;
+    padding: 14px 20px;
+    color: #1c1113;
+    font-weight: bold;
+    outline: none;
+    font-size: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.input-group-reservation .input-grand {
+    background: url('../images/grand_rectV2.png') no-repeat center center;
+    background-size: 100% 100%;
+    border: none;
+    padding: 16px 20px;
+    color: #1c1113;
+    font-weight: bold;
+    outline: none;
+    font-size: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Select customisé */
+.select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.select-grand {
+    background: url('../images/grand_rectV2.png') no-repeat center center;
+    background-size: 100% 100%;
+    border: none;
+    padding: 16px 20px;
+    color: #1c1113;
+    font-weight: bold;
+    outline: none;
+    font-size: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.select-arrow {
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #1c1113;
+    pointer-events: none;
+    font-size: 12px;
+}
+
+/* Bloc bouton de soumission */
+.submit-block {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.btn-reserver-casino {
+    background: url('../images/btn.png') no-repeat center center;
+    background-size: 100% 100%;
+    border: none;
+    width: 260px; /* Légèrement agrandi pour correspondre à la maquette */
+    height: 75px;
+    color: #ffffff;
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: 900;
+    font-size: 16px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    transition: transform 0.2s ease;
+    outline: none;
+}
+
+.btn-reserver-casino:hover {
+    transform: scale(1.05);
+}
+
+/* Boîte de confirmation de succès */
+.msg-success-box {
+    background: url('../images/fond_rougeV2.png') no-repeat center center;
+    background-size: 100% 100%;
+    color: #fff;
+    padding: 60px 40px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.success-title {
+    font-size: 1.4rem;
+    color: #2ecc71;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-family: 'Cinzel Decorative', serif;
+}
+
+.success-text {
+    color: #ecd499;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.btn-profil-ret {
+    display: inline-block;
+    margin-top: 30px;
+    background: url('../images/btn.png') no-repeat center center;
+    background-size: 100% 100%;
+    color: #fff;
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 15px 35px;
+    text-decoration: none;
+    text-shadow: 1px 1px 3px #000;
+    transition: transform 0.2s;
+}
+
+.btn-profil-ret:hover {
+    transform: scale(1.05);
+}
+
+.msg-error-box {
+    background: #c0392b;
+    color: #fff;
+    padding: 12px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    text-align: center;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #7f231c;
+}
+
+/* ==========================================================================
+   7. LAYOUT SPLIT (côte à côte)
+   ========================================================================== */
+.conteneur-split {
+    display: flex;
+    gap: 60px; /* Espace généreux entre l'image et le texte */
+    align-items: center; /* Centre verticalement l'image et le texte */
+    justify-content: center; /* Centre horizontalement l'ensemble sur la page */
+    width: 100%;
+    max-width: 1000px; /* Limite la largeur maximale pour un rendu plus élégant */
+    margin: 0 auto; /* Force le bloc complet à se centrer sur la page */
+}
+
+.colonne-gauche, .colonne-droite {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Force les textes (titres et paragraphes) à s'aligner à gauche ou à droite de manière harmonieuse */
+.colonne-gauche h3, .colonne-droite h3 {
+    text-align: left; /* Aligne le titre avec le paragraphe qui suit */
+}
+
+.colonne-gauche p, .colonne-droite p {
+    text-align: left;
+    margin: 0;
+}
+
+/* Centre les images dans leur colonne si elles sont plus petites que l'espace disponible */
+.colonne-gauche img, .colonne-droite img {
+    margin: 0 auto;
+}
+/* ==========================================================================
+   8. MODES DE JEU (Avec effet Lueur sur les cartes)
+   ========================================================================== */
+.modes-jeu {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+}
+
+.grille-versions {
+    display: flex;
+    justify-content: center;
+    gap: 35px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+/* La Carte : pas de bordure, arrondi prononcé et halo de lueur diffus */
+.carte-version {
+    position: relative;
+    width: 250px;
+    height: 380px;
+    border-radius: 28px !important; /* Arrondi prononcé du screen */
+    overflow: hidden;
+    background-color: #000;
+    border: none !important; /* Supprime l'ancienne bordure linéaire */
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.carte-version:hover {
+    transform: translateY(-5px);
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.9);
+}
+
+.carte-version-image {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.carte-version-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Titre en forme de pilule bordeaux transparente tout en haut */
+.carte-version p.titre-version-top {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80% !important;
+    background: rgba(45, 5, 5, 0.75) !important; /* Teinte bordeaux */
+    color: var(--casino-gold) !important;
+    padding: 8px 15px !important;
+    margin: 0 !important;
+    font-family: 'Cinzel', serif !important;
+    font-size: 12px !important;
+    text-transform: lowercase;
+    text-align: center;
+    border-radius: 20px !important; /* Forme pilule capsule */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.carte-version p.titre-version-top::first-letter {
+    text-transform: uppercase;
+}
+
+/* Bouton "Voir plus" rectangulaire beige/or en bas */
+.voir-plus-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ecd499 !important; /* Couleur or opaque uniforme */
+    color: #1a0101 !important; /* Texte sombre lisible */
+    padding: 6px 16px !important;
+    border-radius: 4px !important; /* Bords légèrement arrondis */
+    font-family: 'Georgia', serif;
+    font-size: 11px;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: none;
+    z-index: 2;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.voir-plus-btn:hover {
+    background: #fff !important;
+    color: #000 !important;
+}
+
+/* Illustrations des sections de présentation en bas (Facile, Intermédiaire, Hardcore) */
+.section-detail-version img {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border: none !important; /* Suppression totale des anciennes bordures rigides */
+    border-radius: 28px !important; /* Même arrondi que les cartes du haut */
+    box-shadow: 10px 10px 28px rgba(236, 212, 153, 0.9); /* Même lueur immersive */
+}
+
+.section-detail-version p {
+    color: var(--text-soft);
+    line-height: 1.75;
+}
+
+.section-video { 
+    text-align: center; 
+}
+
+.conteneur-video-169 {
+    position: relative;
+    padding-bottom: 56.25%; /* Ratio 16:9 */
+    height: 0;
+    overflow: hidden;
+    border: 2px solid var(--casino-gold);
+    margin-top: 20px;
+}
+
+.conteneur-video-169 video {
+    position: absolute;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;
+}
+
+.video-legende {
+    margin-top: 12px;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--casino-gold-dim);
+}
+.conteneur-video-169 {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border: 2px solid var(--casino-gold);
+    margin-top: 20px;
+}
+
+.conteneur-video-169 video {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+}
+
+.video-legende {
+    font-size: 13px;
+    color: var(--casino-gold-dim);
+    margin-top: 12px;
+    font-style: italic;
+    text-align: center;
+}
+
+/* ==========================================================================
+   9. FORMULAIRES GLOBAUX (Champs s'illuminent au focus)
+   ========================================================================== */
+.cadre-formulaire {
+    background-image: url('../images/Calque_4_xA0_Image.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-color: var(--burgundy-dark);
+    padding: 55px 50px;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.cadre-formulaire h3 {
+    margin-bottom: 30px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-groupe {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.form-groupe label {
+    color: var(--casino-gold);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.form-hint {
+    font-size: 11px;
+    font-weight: normal;
+    color: var(--casino-gold-dim);
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+form input,
+form select,
+form textarea,
+.form-reservation input,
+.form-reservation select {
+    padding: 13px 15px;
+    font-size: 15px;
+    background-color: #f5e3be;
+    border: 1px solid transparent;
+    color: var(--text-dark);
+    font-family: 'Georgia', serif;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
+    border-radius: 2px;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus,
+.form-reservation input:focus,
+.form-reservation select:focus {
+    background-color: #fffdec; /* Devient légèrement plus lumineux */
+    border-color: var(--casino-gold);
+    box-shadow: 0 0 12px rgba(236,212,153,0.5);
+}
+
+form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+form select {
+    appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a1510' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+}
+
+.form-lien {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+    color: var(--text-soft);
+}
+
+.form-lien a {
+    color: var(--casino-gold);
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   10. BOUTONS (Avec effet pulsation rouge casino intense)
+   ========================================================================== */
+.btn-reserver, form button[type="submit"]:not(.btn-reserver-casino) {
+    display: block;
+    width: 70%;
+    margin: 20px auto; 
+    padding: 18px;
+    background-color: var(--burgundy-bright);
+    color: var(--casino-gold);
+    border: 2px solid var(--casino-gold);
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.btn-reserver:hover, form button[type="submit"]:not(.btn-reserver-casino):hover {
+    background-color: var(--casino-gold); /* Inversion des couleurs au survol */
+    color: var(--burgundy-dark);
+    border-color: #fff;
+    box-shadow: 0 0 20px var(--casino-gold); /* Effet "Néon" */
+}
+/* ==========================================================================
+   PAGE RÉSERVATION - UNIQUEMENT FORMULAIRE CENTRÉ ET DEUX CHEMINS DE BACK
+   ========================================================================== */
+
+.page-reservation-unique {
+    background: linear-gradient(135deg, rgba(88, 14, 23, 0.8), rgba(22, 5, 8, 0.9)), 
+                url('../images/back_reservV2.png') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    padding: 60px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-reservation {
+    width: 100%;
+    max-width: 920px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titre-reservation {
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: 700;
+    color: #ecd499;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+    font-size: 2.8rem;
+    letter-spacing: 3px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.wrapper-cadre-reservation-epines {
+    background-image: url('../images/cadre-epinesV2.png'), url('../images/fond_rougeV2.png');
+    background-size: 100% 100%, 100% 100%;
+    background-repeat: no-repeat, no-repeat;
+    background-position: center, center;
+    width: 100%;
+    padding: 100px 110px;
+    box-sizing: border-box;
+}
+
+.wrapper-cadre-reservation-epines form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-ligne-double {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+}
+
+.input-group-reservation {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.input-group-reservation.full-width {
+    width: 100%;
+    flex: none;
+}
+
+.input-group-reservation label {
+    color: #ecd499;
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+
+/* Les polygones beiges pour les champs de saisie */
+.input-group-reservation .input-moyen {
+    background: url('../images/moyen_rect.png') no-repeat center center;
+    background-size: 100% 100%;
+    border: none;
+    padding: 14px 20px;
+    color: #1c1113;
+    font-weight: bold;
+    outline: none;
+    font-size: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.input-group-reservation .input-grand {
+    background: url('../images/grand_rectV2.png') no-repeat center center;
+    background-size: 100% 100%;
+    border: none;
+    padding: 14px 20px;
+    color: #1c1113;
+    font-weight: bold;
+    outline: none;
+    font-size: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 🔥 SUPPRESSION DÉFINITIVE DE LA LUEUR DORÉE AU CLIC (FOCUS) */
+.input-group-reservation .input-moyen:focus,
+.input-group-reservation .input-grand:focus,
+.select-grand:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* Menu déroulant sélecteur */
+.select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.select-grand {
+    background: url('../images/grand_rectV2.png') no-repeat center center;
+    background-size: 100% 100%;
+    border: none;
+    padding: 14px 20px;
+    color: #1c1113;
+    font-weight: bold;
+    outline: none;
+    font-size: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.select-arrow {
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #1c1113;
+    pointer-events: none;
+    font-size: 12px;
+}
+
+/* Alignement du bouton */
+.submit-block {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn-reserver-casino {
+    background: url('../images/btn.png') no-repeat center center !important;
+    background-size: 100% 100% !important;
+    border: none !important;
+    width: 230px !important;
+    height: 68px !important;
+    color: #ffffff !important;
+    font-family: 'Cinzel Decorative', serif !important;
+    font-weight: 900 !important;
+    font-size: 14px !important;
+    letter-spacing: 1px !important;
+    cursor: pointer !important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8) !important;
+    transition: transform 0.2s ease !important;
+    outline: none !important;
+    display: block !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+}
+
+.btn-reserver-casino:hover {
+    transform: scale(1.05) !important;
+    box-shadow: none !important;
+}
+
+/* Messages de confirmation */
+.message-succes {
+    background-image: url('../images/cadre-epinesV2.png'), url('../images/fond_rougeV2.png');
+    background-size: 100% 100%, 100% 100%;
+    background-repeat: no-repeat, no-repeat;
+    background-position: center;
+    text-align: center;
+    width: 100%;
+    padding: 60px 45px;
+    box-sizing: border-box;
+}
+
+.success-title {
+    font-size: 1.4rem;
+    color: #2ecc71;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-family: 'Cinzel Decorative', serif;
+}
+
+.success-text {
+    color: #ecd499;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.btn-profil-ret {
+    display: inline-block;
+    margin-top: 30px;
+    background: url('../images/btn.png') no-repeat center center;
+    background-size: 100% 100%;
+    color: #fff;
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 15px 35px;
+    text-decoration: none;
+    text-shadow: 1px 1px 3px #000;
+    transition: transform 0.2s;
+}
+
+.msg-error-box {
+    background: #c0392b;
+    color: #fff;
+    padding: 12px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    text-align: center;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #7f231c;
+}
+/* ==========================================================================
+   12. PAGE CONNEXION
+   ========================================================================== */
+/* Écrase les propriétés restrictives du "main" global pour occuper 100% de l'écran */
+main.page-connexion-unique {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    min-height: 85vh;
+    /* Application de ton image de fond d'ambiance */
+    background: url('../images/background_connexion.png') no-repeat center center !important;
+    background-size: cover !important;
+    font-family: 'Cinzel', serif;
+    padding: 80px 0 !important; /* Reset du padding 10% global qui décentrait le tout */
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    box-sizing: border-box;
+}
+
+.container-connexion {
+    width: 100%;
+    max-width: 1000px;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.titre-connexion {
+    font-family: 'Cinzel Decorative', serif;
+    color: #f1d27f;
+    font-size: 2.5rem;
+    letter-spacing: 4px;
+    text-align: center;
+    margin-bottom: 10px;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.9);
+}
+
+.msg-error-box {
+    background-color: rgba(220, 53, 69, 0.25);
+    border: 1px solid #dc3545;
+    color: #ff8080;
+    font-family: 'Georgia', serif;
+    font-size: 0.95rem;
+    padding: 12px 30px;
+    border-radius: 4px;
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+}
+
+/* Le Cadre Principal (Ronces + Fond) */
+.wrapper-cadre-connexion {
+    width: 100%;
+    max-width: 800px; 
+    background: url('../images/cadre-epines.png') no-repeat center center,
+                url('../images/fond_rouge.png') no-repeat center center;
+    background-size: 100% 100%, 96% 94%; 
+    padding: 80px 90px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    
+    /* On vire radicalement toutes les ombres et bordures magiques du navigateur */
+    box-shadow: none !important;
+    border: none !important;
+    background-color: transparent !important;
+}
+
+.form-connexion {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Alignement flex interne */
+.connexion-split-zone {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    width: 100%;
+}
+
+.connexion-inputs-col {
+    flex: 1.3;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.connexion-logo-col {
+    flex: 0.7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-red-Form {
+    max-width: 130px;
+    height: auto;
+    object-fit: contain;
+}
+
+.input-group-connexion {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.input-group-connexion label {
+    color: #ffffff;
+    font-family: 'Georgia', serif;
+    font-size: 1.2rem;
+}
+
+/* --- FORÇAGE DES TEXTURES PNG ET SUPPRESSION DES FONDS DU NAVIGATEUR --- */
+input.input-connexion-moyen, 
+input.input-connexion-grandV2 {
+    border: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    color: #ffffff !important;
+    font-family: 'Georgia', serif;
+    font-size: 1.1rem;
+    outline: none !important;
+    padding: 0 25px !important;
+    box-sizing: border-box !important;
+    display: block !important;
+}
+
+/* Fix Autofill jaune du navigateur */
+input.input-connexion-moyen:-webkit-autofill,
+input.input-connexion-grandV2:-webkit-autofill {
+    -webkit-text-fill-color: #ffffff !important;
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Moyen rectangle pour le nom d'utilisateur */
+input.input-connexion-moyen {
+    background: url('../images/moyen_rect.png') no-repeat center center !important;
+    background-size: 100% 100% !important;
+    height: 55px !important;
+    width: 100% !important;
+}
+
+/* Grand rectangle V2 pour le mot de passe */
+input.input-connexion-grandV2 {
+    background: url('../images/grand_rectV2.png') no-repeat center center !important;
+    background-size: 100% 100% !important;
+    height: 55px !important;
+    width: 100% !important;
+}
+
+/* Aucun contour parasite au clic */
+input.input-connexion-moyen:focus,
+input.input-connexion-grandV2:focus {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Lien mot de passe oublié */
+.lien-mdp-oublie {
+    color: #ecd499;
+    font-family: 'Georgia', serif;
+    font-size: 0.95rem;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 10px;
+    transition: color 0.2s;
+}
+.lien-mdp-oublie:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* Bouton Soumettre textuel et centré */
+.form-connexion button.btn-valider-connexion {
+    display: inline-block !important;
+    width: auto !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: #ecd499 !important;
+    font-family: 'Georgia', serif !important;
+    font-size: 1.3rem !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    cursor: pointer;
+    align-self: center; 
+    margin-top: 15px !important;
+    padding: 0 !important;
+    transition: color 0.2s ease, transform 0.2s ease !important;
+}
+
+.form-connexion button.btn-valider-connexion:hover {
+    color: #ffffff !important;
+    transform: scale(1.05) !important;
+}
+
+/* Responsive mobile */
+@media (max-width: 768px) {
+    .connexion-split-zone {
+        flex-direction: column-reverse;
+        gap: 30px;
+    }
+    .wrapper-cadre-connexion {
+        padding: 40px 20px;
+    }
+}
+
+
+/* ==========================================================================
+   12. INSCRIPTION
+   ========================================================================== */
+
+main.page-inscription-unique {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    min-height: 100vh;
+    
+    /* On superpose un dégradé bordeaux/rouge translucide (rgba) par-dessus l'image */
+    background: linear-gradient(rgba(49, 6, 6, 0.75), rgba(49, 6, 6, 0.75)), 
+                url('../images/back_reserv.png') no-repeat center center !important;
+    
+    background-size: cover !important;
+    font-family: 'Cinzel', serif;
+    padding: 60px 0 !important; 
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    box-sizing: border-box;
+}
+
+.container-inscription {
+    width: 100%;
+    max-width: 1000px;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+}
+
+.titre-inscription {
+    font-family: 'Cinzel Decorative', serif;
+    color: #f1d27f;
+    font-size: 2.5rem;
+    letter-spacing: 4px;
+    text-align: center;
+    margin-bottom: 0;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.9);
+}
+
+.sous-titre-inscription {
+    font-family: 'Cinzel', serif;
+    color: #f1d27f;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+/* Le Cadre Principal Nettoyé */
+.wrapper-cadre-inscription {
+    width: 100%;
+    max-width: 800px; 
+    background: url('../images/cadre-epines.png') no-repeat center center,
+                url('../images/fond_rouge.png') no-repeat center center;
+    background-size: 100% 100%, 96% 94%; 
+    padding: 70px 90px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    box-shadow: none !important;
+    border: none !important;
+    background-color: transparent !important;
+}
+
+.form-inscription {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+/* Alignements des lignes */
+.row-inputs-double {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+}
+
+.row-inputs-triple {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+.input-group-inscription {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.input-group-inscription label {
+    color: #ffffff;
+    font-family: 'Georgia', serif;
+    font-size: 1.15rem;
+}
+
+/* --- SUPPRESSION DES CADRES DU NAVIGATEUR ET FORÇAGE DES PNG --- */
+input.input-inscription-petit,
+input.input-inscription-moyen,
+input.input-inscription-grand {
+    border: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    color: #ffffff !important;
+    font-family: 'Georgia', serif;
+    font-size: 1.1rem;
+    outline: none !important;
+    padding: 0 20px !important;
+    box-sizing: border-box !important;
+    display: block !important;
+}
+
+/* Neutralisation autofill */
+input.input-inscription-petit:-webkit-autofill,
+input.input-inscription-moyen:-webkit-autofill,
+input.input-inscription-grand:-webkit-autofill {
+    -webkit-text-fill-color: #ffffff !important;
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Assignation des images de fond aux inputs */
+input.input-inscription-petit {
+    background: url('../images/petit_rect.png') no-repeat center center !important;
+    background-size: 100% 100% !important;
+    height: 52px !important;
+}
+
+input.input-inscription-grand {
+    background: url('../images/grand_rectV2.png') no-repeat center center !important;
+    background-size: 100% 100% !important;
+    height: 52px !important;
+}
+
+input.input-inscription-moyen {
+    background: url('../images/moyen_rect.png') no-repeat center center !important;
+    background-size: 100% 100% !important;
+    height: 52px !important;
+}
+
+/* Liens du bas */
+.form-lien-inscription {
+    color: #ffffff;
+    font-family: 'Georgia', serif;
+    font-size: 1rem;
+}
+
+.form-lien-inscription a {
+    color: #ecd499;
+    text-decoration: underline;
+}
+
+/* Bouton Soumettre Épuré */
+.form-inscription button.btn-valider-inscription {
+    display: inline-block !important;
+    width: auto !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: #ecd499 !important;
+    font-family: 'Georgia', serif !important;
+    font-size: 1.3rem !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    cursor: pointer;
+    align-self: center; 
+    margin-top: 15px !important;
+    padding: 0 !important;
+    transition: color 0.2s ease, transform 0.2s ease !important;
+}
+
+.form-inscription button.btn-valider-inscription:hover {
+    color: #ffffff !important;
+    transform: scale(1.05) !important;
+}
+
+/* Boîtes de dialogue d'états */
+.msg-success-box, .msg-error-box {
+    font-family: 'Georgia', serif;
+    font-size: 0.95rem;
+    padding: 12px 30px;
+    border-radius: 4px;
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+}
+.msg-success-box {
+    background-color: rgba(236, 212, 153, 0.1);
+    border: 1px solid #f1d27f;
+    color: #f1d27f;
+}
+.msg-error-box {
+    background-color: rgba(220, 53, 69, 0.25);
+    border: 1px solid #dc3545;
+    color: #ff8080;
+}
+
+/* Responsive mobile */
+@media (max-width: 768px) {
+    .row-inputs-double, .row-inputs-triple {
+        flex-direction: column;
+        gap: 22px;
+    }
+    .wrapper-cadre-inscription {
+        padding: 40px 20px;
+    }
+}
+
+
+/* ==========================================================================
+   26. PAGE MOT DE PASSE OUBLIÉ (Style Identique à la Connexion)
+   ========================================================================== */
+
+main.page-mdp-oublie-unique {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    min-height: 85vh;
+    background: url('../images/background_connexion.png') no-repeat center center !important;
+    background-size: cover !important;
+    font-family: 'Cinzel', serif;
+    padding: 80px 0 !important; 
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    box-sizing: border-box;
+}
+
+.container-mdp-oublie {
+    width: 100%;
+    max-width: 1000px;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.titre-mdp-oublie {
+    font-family: 'Cinzel Decorative', serif;
+    color: #f1d27f;
+    font-size: 2.5rem;
+    letter-spacing: 4px;
+    text-align: center;
+    margin-bottom: 10px;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.9);
+}
+
+/* Consigne texte à l'intérieur du cadre */
+.consigne-recup {
+    color: #ffffff;
+    font-family: 'Georgia', serif;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Le Cadre Principal Nettoyé */
+.wrapper-cadre-mdp-oublie {
+    width: 100%;
+    max-width: 700px; /* Plus compact pour un seul input */
+    background: url('../images/cadre-epines.png') no-repeat center center,
+                url('../images/fond_rouge.png') no-repeat center center;
+    background-size: 100% 100%, 96% 94%; 
+    padding: 80px 90px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    box-shadow: none !important;
+    border: none !important;
+    background-color: transparent !important;
+}
+
+.form-mdp-oublie {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.input-group-mdp-oublie {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.input-group-mdp-oublie label {
+    color: #ffffff;
+    font-family: 'Georgia', serif;
+    font-size: 1.2rem;
+}
+
+/* Forçage texture du grand rectangle v2 */
+input.input-mdp-oublie-grand {
+    border: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    color: #ffffff !important;
+    font-family: 'Georgia', serif;
+    font-size: 1.1rem;
+    outline: none !important;
+    padding: 0 25px !important;
+    box-sizing: border-box !important;
+    display: block !important;
+    background: url('../images/grand_rectV2.png') no-repeat center center !important;
+    background-size: 100% 100% !important;
+    height: 55px !important;
+    width: 100% !important;
+}
+
+input.input-mdp-oublie-grand:focus {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Liens de navigation bas de page */
+.navigation-liens {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.lien-retour {
+    color: #ecd499;
+    font-family: 'Georgia', serif;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.lien-retour:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* Bouton de soumission textuel doré */
+.form-mdp-oublie button.btn-valider-mdp-oublie {
+    display: inline-block !important;
+    width: auto !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: #ecd499 !important;
+    font-family: 'Georgia', serif !important;
+    font-size: 1.3rem !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    cursor: pointer;
+    align-self: center; 
+    margin-top: 15px !important;
+    padding: 0 !important;
+    transition: color 0.2s ease, transform 0.2s ease !important;
+}
+
+.form-mdp-oublie button.btn-valider-mdp-oublie:hover {
+    color: #ffffff !important;
+    transform: scale(1.05) !important;
+}
+
+/* Boxes notifications (Error & Success) */
+.msg-success-box, .msg-error-box {
+    font-family: 'Georgia', serif;
+    font-size: 0.95rem;
+    padding: 12px 30px;
+    border-radius: 4px;
+    text-align: center;
+    width: 100%;
+    max-width: 700px;
+}
+.msg-success-box {
+    background-color: rgba(236, 212, 153, 0.1);
+    border: 1px solid #f1d27f;
+    color: #f1d27f;
+}
+.msg-error-box {
+    background-color: rgba(220, 53, 69, 0.25);
+    border: 1px solid #dc3545;
+    color: #ff8080;
+}
+
+@media (max-width: 768px) {
+    .wrapper-cadre-mdp-oublie {
+        padding: 40px 20px;
+    }
+}
+
+/* ==========================================================================
+   13. MESSAGES D'ÉTAT
+   ========================================================================== */
+.error-message {
+    background-color: rgba(153,0,0,0.3);
+    color: #ffaaaa;
+    border: 1px solid #990000;
+    padding: 14px 20px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.success-message {
+    background-color: rgba(0,100,0,0.25);
+    color: #b8e6b8;
+    border: 1px solid #2a6a2a;
+    padding: 14px 20px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   14. ADMIN DASHBOARD
+   ========================================================================== */
+.admin-dashboard { display: flex; flex-direction: column; gap: 35px; }
+
+.admin-section {
+    background-color: rgba(0,0,0,0.3);
+    padding: 30px;
+    border: 1px solid rgba(236,212,153,0.2);
+    border-radius: 4px;
+}
+
+.admin-section h3,
+.admin-section h4 {
+    color: var(--casino-gold);
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(236,212,153,0.2);
+    padding-bottom: 12px;
+    text-align: left;
+}
+
+.admin-dashboard table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.admin-dashboard th,
+.admin-dashboard td {
+    padding: 12px 15px;
+    border: 1px solid rgba(236,212,153,0.15);
+    color: var(--text-soft);
+    text-align: left;
+}
+
+.admin-dashboard th {
+    background-color: rgba(236,212,153,0.08);
+    color: var(--casino-gold);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.admin-dashboard tr:nth-child(even) { background-color: rgba(0,0,0,0.15); }
+.admin-dashboard tr:hover { background-color: rgba(236,212,153,0.05); }
+
+.badge-mode {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.badge-facile      { background-color: #1a4a1a; color: #90ee90; }
+.badge-intermediaire { background-color: #4a3a00; color: #ffd700; }
+.badge-hardcore    { background-color: #4a0000; color: #ff8080; }
+
+.badge-statut {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+}
+.badge-attente  { background-color: #4a3a00; color: #ffd700; }
+.badge-confirme { background-color: #1a4a1a; color: #90ee90; }
+.badge-annule   { background-color: #4a0000; color: #ff8080; }
+
+.btn-admin-approve,
+.btn-admin-delete,
+.btn-admin-action {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 3px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+.btn-admin-approve { background-color: #28a745; }
+.btn-admin-delete  { background-color: #dc3545; }
+.btn-admin-action  { background-color: var(--burgundy-bright); border: 1px solid var(--casino-gold); color: var(--casino-gold); }
+.btn-admin-approve:hover,
+.btn-admin-delete:hover,
+.btn-admin-action:hover { opacity: 0.8; }
+
+.admin-stats {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    flex: 1;
+    min-width: 140px;
+    background-color: rgba(236,212,153,0.05);
+    border: 1px solid rgba(236,212,153,0.2);
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+}
+
+.stat-card .stat-nombre {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 36px;
+    color: var(--casino-gold);
+    display: block;
+}
+
+.stat-card .stat-label {
+    font-size: 12px;
+    color: var(--casino-gold-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 5px;
+}
+
+/* ==========================================================================
+   15. PROFIL
+   ========================================================================== */
+.profil-header {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    padding: 30px;
+    background-color: rgba(0,0,0,0.3);
+    border: 1px solid rgba(236,212,153,0.2);
+    border-radius: 4px;
+}
+
+.profil-avatar {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    background-color: var(--burgundy-bright);
+    border: 2px solid var(--casino-gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 26px;
+    color: var(--casino-gold);
+    flex-shrink: 0;
+}
+
+.profil-info h3 { text-align: left; font-size: 18px; margin-bottom: 5px; }
+.profil-info p  { font-size: 13px; color: var(--casino-gold-dim); }
+
+.liste-reservations { display: flex; flex-direction: column; gap: 15px; }
+
+.carte-reservation {
+    background-color: rgba(0,0,0,0.25);
+    border: 1px solid rgba(236,212,153,0.2);
+    border-radius: 4px;
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.carte-reservation-info h4 {
+    text-align: left;
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+
+.carte-reservation-info p {
+    font-size: 13px;
+    color: var(--casino-gold-dim);
+}
+
+/* ==========================================================================
+   16. INFOS PRATIQUES
+   ========================================================================== */
+/* ==========================================================================
+   PAGE INFORMATIONS PRATIQUES - CORRECTION PLEINE LARGEUR (100% CORRESPONDANCE)
+   ========================================================================== */
+
+body {
+    overflow-x: hidden;
+}
+
+.page-infos-pratiques {
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Technique d'éclatement totale pour forcer le fond à toucher les bords réels */
+.section-infos-haute,
+.section-modalites {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    box-sizing: border-box;
+}
+
+/* Recentrage propre des textes au milieu */
+.content-limiteur {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* --- Section Haute (Sable total d'un bord à l'autre) --- */
+.section-infos-haute {
+    background-color: #ecd499 !important;
+    padding: 60px 0 20px 0;
+}
+
+/* On retire la police Cinzel Decorative d'ici pour laisser la police de base du site */
+.section-infos-haute p,
+.section-infos-haute strong,
+.section-infos-haute span {
+    color: #1e1214 !important;
+}
+
+.titre-infos {
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: 700;
+    font-size: 2.6rem;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #1e1214 !important;
+}
+
+.sous-titre-infos {
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: 600;
+    font-size: 1.6rem;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #8a252d !important;
+}
+
+.bloc-carte-ambiance {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+/* Le cadre d'épines rouge */
+.cadre-carte-epines {
+    background-image: url('../images/fond_rougeV3.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 60px 50px 75px 50px;
+    flex: 1.2;
+    box-sizing: border-box;
+}
+
+.texte-lieu-droite {
+    flex: 1;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+/* Gestion de tes images vagues */
+.vague-delimite {
+    width: 100%;
+    max-width: 650px;
+    height: auto;
+    margin: 30px 0 50px 0;
+}
+
+.vague-delimite-reverse {
+    width: 100%;
+    max-width: 650px;
+    height: auto;
+    margin: 0 0 40px 0;
+}
+
+.bloc-coordonnees-horaires {
+    display: flex;
+    gap: 60px;
+    width: 100%;
+    font-size: 16px;
+    line-height: 1.8;
+    padding-bottom: 40px;
+}
+
+.colonne-gauche-contacts { flex: 1; }
+.colonne-droite-description { flex: 1.3; }
+
+/* --- Section Basse (Modalités bordeaux) --- */
+.section-modalites {
+    background: linear-gradient(135deg, rgba(58, 10, 15, 0.4), rgba(18, 4, 6, 0.96)), 
+                url('../images/img_info.png') no-repeat center center;
+    background-size: cover;
+    padding: 80px 0;
+}
+
+.titre-modalites {
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: 600;
+    color: #ecd499 !important;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.texte-modalites-container p {
+    color: #ecd499 !important;
+    font-size: 16px;
+    line-height: 1.9;
+    text-align: center;
+}
+
+.texte-modalites-container strong {
+    color: #ecd499 !important;
+}
+
+@media (max-width: 850px) {
+    .bloc-carte-ambiance, .bloc-coordonnees-horaires {
+        flex-direction: column;
+        gap: 30px;
+    }
+}
+/* ==========================================================================
+   17. FOOTER OPTIMISÉ — NIGHT CASINO
+   ========================================================================== */
+footer {
+    background-color: #0a0a0a; /* Ton noir profond */
+    padding: 20px 50px;
+    margin-top: 40px;
+}
+
+.footer-container {
+    
+    display: flex;
+    justify-content: space-between; /* Écarte les éléments aux extrémités */
+    align-items: center; /* Aligne tout verticalement au milieu */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-item {
+    display: flex;
+    gap: 30px; /* Espace entre les liens */
+    align-items: center;
+}
+
+/* Style des liens du footer */
+.footer-item a {
+    color: var(--casino-gold);
+    text-decoration: none;
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+.footer-item a:hover {
+    color: #fff;
+}
+
+.footer-icon {
+    width: 30px;    
+    height: 30px;
+    margin-right: 10px;
+}
+/* Tailles des logos */
+.logo-footer { width: 120px; }
+.logo-agence { width: 120px; }
+
+
+/* ==========================================================================
+   BOUTON HAMBURGER (Masqué par défaut sur ordinateur)
+   ========================================================================== */
+.hamburger-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 32px;
+    height: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 110;
+}
+
+.hamburger-btn .bar {
+    width: 100%;
+    height: 3px;
+    background-color: var(--casino-gold);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* ==========================================================================
+   18. RESPONSIVE MOBILE & TABLETTE (max-width: 1024px)
+   ========================================================================== */
+@media (max-width: 1024px) {
+    main {
+        width: 100%;
+        max-width: none;
+        padding: 40px 6%;
+        gap: 40px;
+        box-shadow: none;
+    }
+
+    /* HEADER : Alignement horizontal, Logo à GAUCHE, Hamburger à DROITE */
+    header {
+        display: flex !important;
+        flex-direction: row !important; 
+        justify-content: space-between !important; 
+        align-items: center !important;
+        padding: 20px 30px !important;
+        position: relative;
+    }
+
+    /* Redimensionnement et calage du logo à gauche */
+    .logo {
+        margin: 0 !important;
+        display: flex;
+        align-items: center;
+    }
+
+    .logo img, .header-logo-img {
+        max-width: 60px; /* Taille compacte identique au screen */
+        height: auto !important;
+        display: block;
+    }
+
+    /* Affichage du bouton hamburger à droite */
+    .hamburger-btn {
+        display: flex;
+    }
+
+    /* MASQUAGE COMPLET DES PICTOS ET RECONVERSION EN MENU DÉROULANT */
+    .nav-container {
+        display: none; 
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--burgundy-dark);
+        border-bottom: 1px solid rgba(236, 212, 153, 0.15);
+        z-index: 105;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Classe activée par le JavaScript pour ouvrir/fermer le menu */
+    .nav-container.active {
+        display: block;
+    }
+
+    header nav ul.nav-icones {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0 !important;
+        padding: 10px 0 !important;
+    }
+
+    header nav ul.nav-icones li {
+        width: 100%;
+    }
+
+    /* Transformation des liens en lignes de liste textuelle */
+    header nav ul.nav-icones li a.lien-icone {
+        display: block !important;
+        padding: 15px 25px !important;
+        color: var(--casino-gold) !important;
+        text-align: left !important;
+        border-bottom: 1px solid rgba(236, 212, 153, 0.05);
+        text-decoration: none;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* On cache l'image de l'icône dans le menu mobile */
+    header nav ul.nav-icones li a.lien-icone img.icon-nav {
+        display: none !important;
+    }
+
+    /* On utilise l'ancienne infobulle comme texte principal visible */
+    .tooltip-nav {
+        display: block !important;
+        position: static !important;
+        opacity: 1 !important;
+        transform: none !important;
+        font-size: 14px !important;
+        letter-spacing: 1px;
+        color: var(--casino-gold) !important;
+        pointer-events: auto !important;
+    }
+
+    /* Ajustement du sous-menu profil à l'intérieur du menu mobile */
+    .dropdown-content {
+        position: static !important;
+        background-color: rgba(0, 0, 0, 0.2) !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding-left: 20px !important;
+        display: none;
+    }
+    
+    .profile-menu:hover .dropdown-content,
+    .dropdown-content.show {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    /* RESTE DU DESIGN DE LA PAGE (Déjà présent dans votre code) */
+    h2 { font-size: 22px; }
+    h3 { font-size: 17px; }
+
+    .conteneur-split,
+    .conteneur-reservation { flex-direction: column; }
+
+    .modes-jeu { flex-direction: column; }
+    .grille-versions { flex-direction: column; align-items: center; }
+    .form-ligne-double { flex-direction: column; }
+
+    .cadre-ambiance,
+    .cadre-formulaire,
+    .cadre-formulaire-reservation,
+    .zone-texte-style { padding: 40px 25px; }
+
+    .info-grid { grid-template-columns: 1fr; }
+    .admin-stats { flex-direction: column; }
+    .carte-reservation { flex-direction: column; align-items: flex-start; }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+    .footer-left, .footer-center, .footer-right {
+        justify-content: center;
+    }
+
+    .profil-header { flex-direction: column; text-align: center; }
+    .profil-info h3 { text-align: center; }
+}
+/* ==========================================================================
+   19. SECTION AVIS (Livre d'Or)
+   ========================================================================== */
+.section-avis {
+    width: 100%;
+    padding: 60px 20px 100px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Alignement vertical et centrage du titre et des vagues */
+.bloc-titre-avis {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.titre-principal-avis {
+    font-family: 'Cinzel Decorative', serif;
+    color: var(--casino-gold, #ecd499) !important;
+    font-size: 2.6rem;
+    letter-spacing: 4px;
+    margin: 20px 0;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.bloc-titre-avis .vague-delimite {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+}
+
+.bloc-titre-avis .vague-delimite-reverse {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    transform: scaleY(-1);
+    margin-bottom: 50px;
+}
+
+/* Zone d'affichage linéaire des avis */
+.liste-avis-maquette {
+    width: 100%;
+    max-width: 850px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* FORCE L'ALIGNEMENT DES ENFANTS AU CENTRE */
+    justify-content: center; /* SÉCURITÉ DE CENTRAGE */
+    gap: 35px;
+    margin: 0 auto; /* CENTRE LA GRILLE ELLE-MÊME */
+}
+
+/* CHAQUE AVIS AVEC UN EFFET DE LUEUR DORÉE */
+.item-avis-unique {
+    width: 100%;
+    max-width: 750px; /* Aligne la largeur max pour un rendu élégant */
+    margin: 0 auto; /* FORCE LE CENTRAGE HORIZONTAL DU BLOC */
+    padding: 30px 40px;
+    box-sizing: border-box;
+    background: linear-gradient(180deg, rgba(30, 18, 20, 0.4) 0%, rgba(15, 8, 10, 0.6) 100%);
+    border-radius: 8px;
+    border: 1px solid rgba(236, 212, 153, 0.15);
+    box-shadow: 0 0 25px rgba(236, 212, 153, 0.08), inset 0 0 15px rgba(236, 212, 153, 0.03); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Effet dynamique discret au survol */
+.item-avis-unique:hover {
+    transform: translateY(-2px);
+    border-color: rgba(236, 212, 153, 0.3);
+    box-shadow: 0 0 35px rgba(236, 212, 153, 0.18); /* Accentuation de la lueur */
+}
+
+/* En-tête : Alignement parfait des piques et du pseudo sur la même ligne */
+.entete-avis-ligne {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.piques-notation-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Icônes d'as de pique agrandies */
+.pique-icone {
+    width: 26px; /* Agrandis pour être bien présents et visibles */
+    height: auto;
+    object-fit: contain;
+    display: inline-block;
+}
+
+.nom-auteur-avis {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.35rem; /* Grand format textuel */
+    font-weight: 700;
+    color: var(--casino-gold, #ecd499) !important;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+/* Corps du texte du commentaire client */
+.texte-corps-avis {
+    font-size: 16px; /* Plus grand pour contrer l'effet petit */
+    line-height: 1.7;
+    color: #f5f0e1 !important; /* Crème clair élégant */
+    margin: 0;
+}
+
+/* Version mobile */
+@media (max-width: 768px) {
+    .item-avis-unique {
+        padding: 25px 20px;
+    }
+    .entete-avis-ligne {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    .pique-icone {
+        width: 22px;
+    }
+}
+
+
+/* ==========================================================================
+   20. PAGE CONCEPT
+   ========================================================================== */
+main.page-concept-unique {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    background-color: #e5c583 !important; /* Couleur de fond jaune */
+    color: #310606 !important;
+    font-family: 'Cinzel', serif;
+    padding: 60px 0 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.container-concept {
+    width: 100%;
+    max-width: 900px;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+}
+
+.titre-concept {
+    font-family: 'Cinzel Decorative', serif;
+    color: #310606;
+    font-size: 2.6rem;
+    letter-spacing: 4px;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.sous-titre-concept {
+    font-family: 'Cinzel Decorative', serif;
+    color: #7a1510;
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.section-concept-bloc {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+/* Gestion de vague.png standard */
+.vague-delimite {
+    width: 70%;
+    max-width: 500px;
+    height: auto;
+    display: block;
+    margin: 5px auto 30px auto;
+}
+
+/* Inversion de vague.png vers le bas */
+.vague-delimite-reverse {
+    width: 70%;
+    max-width: 500px;
+    height: auto;
+    display: block;
+    margin: 5px auto 30px auto;
+    transform: scaleY(-1);
+}
+
+/* --- SCÉNARIO --- */
+.conteneur-split-scenario {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.colonne-texte-scenario {
+    flex: 1.2;
+}
+
+.colonne-texte-scenario p {
+    color: #310606 !important;
+    font-family: 'Georgia', serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    text-align: center; 
+}
+
+.colonne-image-scenario {
+    flex: 0.8;
+    display: flex;
+    justify-content: center;
+}
+
+.concept-image-rounded {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 24px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* --- CONDITIONS --- */
+.conditions-liste-pictos {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+    gap: 18px;
+    width: 100%;
+}
+
+.conditions-liste-pictos li {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: #310606;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.conditions-liste-pictos strong {
+    letter-spacing: 1px;
+    color: #7a1510;
+    margin-right: 6px;
+}
+
+/* --- SERVICES --- */
+.services-grille-casino {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.service-carte-casino {
+    position: relative;
+    width: 240px;
+    height: 320px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+}
+
+.service-carte-casino img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.service-carte-casino::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(49, 6, 6, 0.65);
+}
+
+.service-carte-casino p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    margin: 0 !important;
+    color: #e5c583 !important;
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    z-index: 2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* --- PLANNING --- */
+.wrapper-cadre-planning-casino {
+    width: 100%;
+    max-width: 800px;
+    background: url('../images/cadre-epines.png') no-repeat center center,
+                url('../images/fond_rouge.png') no-repeat center center;
+    background-size: 100% 100%, 96% 94%;
+    padding: 70px 60px;
+    box-sizing: border-box;
+    margin: 10px auto 0 auto;
+}
+
+.contenu-planning-interne {
+    text-align: center;
+    color: #ffffff;
+}
+
+.contenu-planning-interne h3 {
+    font-family: 'Cinzel Decorative', serif;
+    color: #e5c583;
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+}
+
+/* --- INTERDICTIONS (Le fix pour interdictions.png) --- */
+.section-interdictions-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: hidden; /* Sécurité pour éviter tout débordement */
+}
+
+.img-interdictions-responsive {
+    width: 100%;
+    max-width: 800px; /* Taille maximale sur ordinateur */
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+
+/* ==========================================================================
+   RESPONSIVE MOBILE & TABLETTE (max-width: 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+    main.page-concept-unique {
+        padding: 40px 0 !important;
+    }
+    
+    .container-concept {
+        gap: 40px;
+    }
+
+    .titre-concept {
+        font-size: 2rem;
+    }
+
+    /* Le scénario passe l'un sous l'autre */
+    .conteneur-split-scenario {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .colonne-image-scenario .concept-image-rounded {
+        max-width: 280px; /* Un poil plus petit sur petit écran */
+    }
+
+    /* Les trois cartes de services s'empilent proprement */
+    .services-grille-casino {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .service-carte-casino {
+        width: 100%;
+        max-width: 280px;
+        height: 280px; /* Un peu plus carré sur mobile */
+    }
+
+    /* Ajustement du texte dans le grand cadre bordeaux */
+    .wrapper-cadre-planning-casino {
+        padding: 60px 25px;
+        background-size: 100% 100%, 98% 94%;
+    }
+    
+    .contenu-planning-interne h3 {
+        font-size: 1.3rem;
+    }
+
+    /* Rend l'image d'interdiction totalement flexible sur mobile */
+    .img-interdictions-responsive {
+        width: 100%;
+        padding: 0 10px; /* Laisse un mini espace respirer sur les bords de l'écran */
+    }
+    
+    .vague-delimite, .vague-delimite-reverse {
+        width: 85%;
+    }
+}
+/* ==========================================================================
+   21. NAVIGATION HEADER — version icônes
+   ========================================================================== */
+
+.nav-icones li {
+    position: relative;
+}
+
+.icon-nav {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    transition: filter 0.3s ease, transform 0.3s ease;
+    filter: drop-shadow(0px 0px 5px rgba(236, 212, 153, 0.3)); 
+}
+
+.lien-icone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.lien-icone:hover .icon-nav {
+    filter: brightness(2);
+    transform: translateY(-2px);
+}
+
+
+
+
+.tooltip-nav {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--casino-gold-dim);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.lien-icone:hover .tooltip-nav {
+    opacity: 1;
+}
+
+.profile-menu {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: calc(100% + 15px);
+    right: 0;
+    background-color: var(--burgundy-dark);
+    border: 1px solid var(--casino-gold);
+    border-radius: 4px;
+    min-width: 160px;
+    z-index: 200;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.profile-menu:hover .dropdown-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-content a {
+    padding: 12px 18px;
+    color: var(--casino-gold);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: background-color 0.2s, color 0.2s;
+    white-space: nowrap;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--burgundy-bright);
+    color: #fff;
+}
+
+/* ==========================================================================
+   22. PAGE MENTIONS LÉGALES
+   ========================================================================== */
+.page-mentions {
+    gap: 30px;
+}
+
+.page-mentions .zone-texte-style {
+    text-align: left;
+}
+
+.page-mentions .zone-texte-style h3 {
+    text-align: left;
+    margin-bottom: 12px;
+}
+
+.page-mentions .zone-texte-style p {
+    text-align: left;
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   23. FORMULAIRE SCORE ÉQUIPE (admin)
+   ========================================================================== */
+.form-score-equipe {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-score-equipe input {
+    background-color: rgba(236,212,153,0.08);
+    color: var(--text-light);
+    border: 1px solid rgba(236,212,153,0.3);
+}
+
+.form-score-equipe input:focus {
+    border-color: var(--casino-gold);
+}
+
+/* ==========================================================================
+   24. PAGE PROFIL
+   ========================================================================== */
+.page-profil-unique {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #2c0505; 
+    font-family: 'Cinzel', serif;
+    padding: 60px 0;
+    display: flex;
+    justify-content: center; /* Centre horizontalement l'espace de profil dans le viewport */
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.container-profil {
+    width: 100%;
+    max-width: 1000px; 
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre verticalement tous les composants internes */
+    gap: 40px;
+}
+
+/* --- TITRE ET ICONE DE PROFIL (Alignement horizontal côte à côte) --- */
+.titre-espace {
+    font-family: 'Cinzel Decorative', serif;
+    color: #f1d27f;
+    font-size: 2.2rem;
+    letter-spacing: 3px;
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: row; 
+    align-items: center; 
+    gap: 20px;
+    text-align: center;
+}
+
+.icon-avatar img {
+    width: 60px; 
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+/* --- LOGIQUE DE LA BOÎTE DE SUCCÈS (NOTIFICATION) --- */
+.msg-success-box {
+    background-color: rgba(236, 212, 153, 0.1);
+    border: 1px solid #f1d27f;
+    color: #f1d27f;
+    font-family: 'Georgia', serif;
+    font-size: 1rem;
+    padding: 12px 30px;
+    border-radius: 4px;
+    text-align: center;
+    width: 100%;
+    max-width: 850px;
+    box-shadow: 0 0 15px rgba(236, 212, 153, 0.2);
+    margin-bottom: 10px;
+}
+.icon-success {
+    margin-right: 8px;
+}
+
+/* --- SECTIONS ET TITRES INTERNES --- */
+.section-infos, .section-avis {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.titre-section {
+    font-family: 'Cinzel Decorative', serif;
+    color: #f1d27f;
+    font-size: 1.4rem;
+    align-self: flex-start; 
+    max-width: 850px;       
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+}
+
+/* --- LE CADRE SUPERIEUR (cadre-epines.png) --- */
+.wrapper-cadre-epines {
+    width: 100%;
+    max-width: 850px;
+    background: url('../images/cadre-epines.png') no-repeat center center,
+                url('../images/fond_rouge.png') no-repeat center center;
+    background-size: 100% 100%, 96% 94%; 
+    padding: 80px 100px;
+    box-sizing: border-box;
+    margin: 0 auto; 
+}
+
+.form-profil {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    position: relative;
+}
+
+.row-inputs {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.input-group label {
+    color: #ffffff;
+    font-family: 'Georgia', serif;
+    font-size: 1.1rem;
+}
+
+/* --- NETTOYAGE STRICT ET SUPPRESSION DU CADRE BLANC DES INPUTS --- */
+.input-special-petit, 
+.input-special-grand {
+    border: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    color: #ffffff !important;
+    font-family: 'Georgia', serif;
+    font-size: 1.1rem;
+    outline: none !important;
+    padding: 0 25px;
+    box-sizing: border-box;
+}
+
+/* Écrase les styles agressifs du navigateur (Autofill jaune/blanc sur Chrome) */
+.input-special-petit:-webkit-autofill,
+.input-special-grand:-webkit-autofill,
+.input-special-petit:-webkit-autofill:hover, 
+.input-special-petit:-webkit-autofill:focus {
+    -webkit-text-fill-color: #ffffff !important;
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.input-special-petit {
+    background: url('../images/petit_rect.png') no-repeat center center !important;
+    background-size: 100% 100% !important;
+    height: 55px; 
+    width: 100%;
+}
+
+.input-special-grand {
+    background: url('../images/grand_rect.png') no-repeat center center !important;
+    background-size: 100% 100% !important;
+    height: 55px;
+    width: 100%;
+}
+
+/* Pas d'outlines disgracieuses au focus */
+.input-special-petit:focus,
+.input-special-grand:focus {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* --- RE-STYLISATION DU BOUTON MODIFIER TEXTUEL (Esprit maquette) --- */
+.form-profil button.btn-modifier-profil {
+    display: inline-block !important;
+    width: auto !important;
+    background: none !important; 
+    border: none !important;     
+    box-shadow: none !important;  
+    color: #ecd499 !important; /* Couleur or */
+    font-family: 'Georgia', serif !important;
+    font-size: 1.2rem !important;
+    font-weight: normal !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    cursor: pointer;
+    align-self: flex-end; /* Calage parfait en bas à droite du cadre */
+    margin: 10px 0 0 0 !important; 
+    padding: 10px 20px !important;
+    transition: color 0.2s ease, transform 0.2s ease !important;
+}
+
+.form-profil button.btn-modifier-profil:hover {
+    color: #ffffff !important;
+    background: none !important;
+    transform: scale(1.05) !important;
+}
+
+/* --- LE CADRE INFERIEUR (rect_avis.png) --- */
+.wrapper-cadre-avis {
+    width: 100%;
+    max-width: 850px; 
+    background: url('../images/rect_avis.png') no-repeat center center;
+    background-size: 100% 100%;
+    min-height: 350px; 
+    padding: 60px 80px;
+    box-sizing: border-box;
+    margin: 0 auto; 
+}
+
+.content-avis-interne {
+    color: #ffffff;
+}
+
+/* --- ASSIGNATION DES IMAGES POUR LES PIQUES --- */
+.rating-spades {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 25px;
+}
+
+.rating-spades .spade {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.rating-spades .spade.dark {
+    background-image: url('../images/pique.png') !important;
+}
+
+.rating-spades .spade.gold {
+    background-image: url('../images/pique_dore.png') !important;
+}
+
+.scrollable-historique {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.scrollable-historique::-webkit-scrollbar {
+    width: 6px;
+}
+.scrollable-historique::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
