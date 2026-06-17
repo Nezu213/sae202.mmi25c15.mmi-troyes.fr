@@ -7,18 +7,11 @@
     <div class="zone-texte-style">
         <h3>Éditeur du site</h3>
         <p>
-            Le présent site est édité dans le cadre d'un projet étudiant (SAE 202 — BUT MMI).
-            Raison sociale : Night Casino — Événement.<br>
-            Adresse : [À compléter]<br>
-            Téléphone : [À compléter]<br>
-            E-mail : contactallagency@gmail.com
-        </p>
-    </div>
+            Site fait par l'agence All Agency.
 
-    <div class="zone-texte-style">
-        <h3>Hébergement</h3>
-        <p>
-            Le site est hébergé par [Nom de l'hébergeur], [Adresse de l'hébergeur].
+            Adresse : Troyes, 10000<br>
+            Téléphone : 03 78 65 52 43<br>
+            E-mail : contact@allagency.com
         </p>
     </div>
 

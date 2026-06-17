@@ -39,7 +39,7 @@ include_once("view/header.php");
         <p class="video-legende">Découvrez l'ambiance clandestine et mystérieuse du Night Casino avant de réserver votre table.</p>
     </section>
 
-<section class="modes-jeu">
+    <section class="modes-jeu">
         <h2>Faites vos jeux...</h2>
 
         <div class="grille-versions">
@@ -69,7 +69,6 @@ include_once("view/header.php");
         </div>
     </section>
     
-    
     <section id="version-facile" class="section-detail-version">
         <div class="conteneur-split">
             <div class="colonne-gauche">
@@ -77,7 +76,7 @@ include_once("view/header.php");
             </div>
             <div class="colonne-droite">
                 <h3>Version Facile</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam.</p>
+                <p>Idéal pour s'initier aux règles et peaufiner vos premières stratégies sans prendre de risques. Les jetons coulent à flot, l'ambiance est détendue et les croupiers se montrent particulièrement indulgents avec les nouveaux visages du Night Casino.</p>
             </div>
         </div>
     </section>
@@ -86,7 +85,7 @@ include_once("view/header.php");
         <div class="conteneur-split">
             <div class="colonne-gauche">
                 <h3>Version Intermédiaire</h3>
-                <p>Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.</p>
+                <p>L'expérience authentique du Night Casino. Trouvez le parfait équilibre entre adrénaline et contrôle avec des règles de jeu classiques et des tables équilibrées. C'est ici que se forgent les véritables légendes du tapis noir.</p>
             </div>
             <div class="colonne-droite">
                 <img src="images/image_intermediaire.jpg" alt="Illustration Version Intermédiaire">
@@ -101,7 +100,7 @@ include_once("view/header.php");
             </div>
             <div class="colonne-droite">
                 <h3>Version Hardcore</h3>
-                <p>Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor.</p>
+                <p>Réservé aux flambeurs d'élite et aux joueurs aguerris. Ici, les mises de départ sont multipliées par 10, le bluff est un art de vivre et la moindre erreur peut vider votre bankroll en un clin d'œil. Serez-vous de taille face aux requins du tapis vert ?</p>
             </div>
         </div>
     </section>
@@ -109,15 +108,13 @@ include_once("view/header.php");
     <!-- ===========================================
          SECTION AVIS (Livre d'Or)
     ============================================ -->
-
-<div class="liste-avis-maquette">
+    <section class="section-livre-or">
+        <div class="liste-avis-maquette">
             <?php if (!empty($liste_avis)): ?>
                 <?php foreach ($liste_avis as $un_avis): 
-                    // Sécurité pour la note de piques
                     $note = intval($un_avis['note'] ?? $un_avis['nb_etoiles'] ?? 5);
                     $commentaire = htmlspecialchars($un_avis['commentaire'] ?? $un_avis['texte'] ?? '');
 
-                    // TEST DE TOUTES LES CLÉS POSSIBLES POUR LE NOM DE L'UTILISATEUR
                     $pseudo = '';
                     if (!empty($un_avis['pseudo'])) { $pseudo = $un_avis['pseudo']; }
                     elseif (!empty($un_avis['nom'])) { $pseudo = $un_avis['nom']; }
@@ -125,12 +122,11 @@ include_once("view/header.php");
                     elseif (!empty($un_avis['login'])) { $pseudo = $un_avis['login']; }
                     elseif (!empty($un_avis['username'])) { $pseudo = $un_avis['username']; }
                     elseif (!empty($un_avis['id_utilisateur'])) { $pseudo = "Joueur #" . $un_avis['id_utilisateur']; }
-                    else { $pseudo = 'Joueur'; } // Valeur par défaut pour ne pas laisser vide
+                    else { $pseudo = 'Joueur'; }
 
                     $pseudo = htmlspecialchars($pseudo);
                 ?>
                     <div class="item-avis-unique">
-                        
                         <div class="entete-avis-ligne">
                             <div class="piques-notation-wrapper">
                                 <?php
@@ -142,20 +138,16 @@ include_once("view/header.php");
                                 }
                                 ?>
                             </div>
-                            
                             <h4 class="nom-auteur-avis"><?php echo $pseudo; ?></h4>
                         </div>
-                        
-                        <p class="texte-corps-avis">
-                            <?php echo $commentaire; ?>
-                        </p>
-
+                        <p class="texte-corps-avis"><?php echo $commentaire; ?></p>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
                 <p style="text-align: center; color: #ecd499; font-style: italic;">Aucun avis pour le moment.</p>
             <?php endif; ?>
         </div>
+    </section>
 </main>
 
 <?php include_once("view/footer.php"); ?>
