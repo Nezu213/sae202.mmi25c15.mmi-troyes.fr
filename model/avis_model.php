@@ -7,7 +7,13 @@ require_once __DIR__ . '/../view/bdd.php';
 
 function get_avis_a_valider() {
     global $link;
-    $query = $link->prepare("SELECT * FROM avis WHERE est_approuve = 0 ORDER BY id_avis DESC");
+    $query = $link->prepare("
+        SELECT a.*, u.user_pseudo
+        FROM avis a
+        JOIN user u ON a.user_id = u.user_id
+        WHERE a.est_approuve = 0 
+        ORDER BY a.id_avis DESC
+    ");
     $query->execute();
     return $query->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -20,7 +26,13 @@ function approuver_avis($id_avis) {
 
 function get_tous_les_avis_valides() {
     global $link;
-    $query = $link->prepare("SELECT * FROM avis WHERE est_approuve = 1 ORDER BY id_avis DESC");
+    $query = $link->prepare("
+        SELECT a.*, u.user_pseudo
+        FROM avis a
+        JOIN user u ON a.user_id = u.user_id
+        WHERE a.est_approuve = 1 
+        ORDER BY a.id_avis DESC
+    ");
     $query->execute();
     return $query->fetchAll(PDO::FETCH_ASSOC);
 }

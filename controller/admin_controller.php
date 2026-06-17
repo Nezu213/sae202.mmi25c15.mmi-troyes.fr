@@ -21,7 +21,8 @@ switch ($action) {
                     ':score' => $nouveau_score,
                     ':id' => $id_session
                 ]);
-                header('Location: ../gestion/index.php?success=score_updated');
+                // Redirection absolue vers ton dossier gestion
+                header('Location: /sae202_event/gestion/index.php?success=score_updated');
                 exit();
             } catch (PDOException $e) {
                 die("Erreur lors de la mise a jour du score : " . $e->getMessage());
@@ -35,13 +36,13 @@ switch ($action) {
             try {
                 $query = $link->prepare("DELETE FROM reservations WHERE id_reservations = :id");
                 $query->execute([':id' => $id_reservations]);
-                header('Location: ../gestion/index.php?success=reservation_deleted');
+                header('Location: /sae202_event/gestion/index.php?success=reservation_deleted');
                 exit();
             } catch (PDOException $e) {
                 die("Erreur SQL lors de la suppression de la reservation : " . $e->getMessage());
             }
         } else {
-            header('Location: ../gestion/index.php?error=missing_id');
+            header('Location: /sae202_event/gestion/index.php?error=missing_id');
             exit();
         }
         break;
@@ -52,7 +53,7 @@ switch ($action) {
             try {
                 $query = $link->prepare("UPDATE avis SET est_approuve = 1 WHERE id_avis = ?");
                 $query->execute([$id_avis]);
-                header('Location: ../gestion/index.php?success=avis_approved');
+                header('Location: /sae202_event/gestion/index.php?success=avis_approved');
                 exit();
             } catch (PDOException $e) {
                 die("Erreur lors de l'approbation de l'avis : " . $e->getMessage());
@@ -66,7 +67,7 @@ switch ($action) {
             try {
                 $query = $link->prepare("DELETE FROM avis WHERE id_avis = ?");
                 $query->execute([$id_avis]);
-                header('Location: ../gestion/index.php?success=avis_deleted');
+                header('Location: /sae202_event/gestion/index.php?success=avis_deleted');
                 exit();
             } catch (PDOException $e) {
                 die("Erreur lors de la suppression de l'avis : " . $e->getMessage());
@@ -75,7 +76,7 @@ switch ($action) {
         break;
 
     default:
-        header('Location: ../gestion/index.php');
+        header('Location: /sae202_event/gestion/index.php');
         exit();
 }
 ?>

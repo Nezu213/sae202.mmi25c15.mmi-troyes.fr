@@ -7,7 +7,7 @@
     <div class="zone-texte-style">
         <h3>Éditeur du site</h3>
         <p>
-            Le présent site est édité dans le cadre d'un projet étudiant (SAE 202 — BUT Informatique).
+            Le présent site est édité dans le cadre d'un projet étudiant (SAE 202 — BUT MMI).
             Raison sociale : Night Casino — Événement.<br>
             Adresse : [À compléter]<br>
             Téléphone : [À compléter]<br>
@@ -25,7 +25,7 @@
     <div class="zone-texte-style">
         <h3>Conception et réalisation</h3>
         <p>
-            Conception graphique et développement : All Agency, dans le cadre du projet SAE 202.
+            Conception graphique et développement : All Agency, dans le cadre du projet SAE 202 — BUT MMI.
         </p>
     </div>
 
@@ -56,6 +56,8 @@
             nécessaires au fonctionnement (session de connexion) peuvent être déposés.
         </p>
     </div>
+
+    <script src="js/script.js"></script>    
 
 </main>
 

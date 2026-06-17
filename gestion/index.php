@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Authentification HTTP exigee par le cahier des charges (Invite de saisie du navigateur)
 $admin_attendu = 'admin'; 
-$mdp_attendu = 'URCA_mmi2026'; 
+$mdp_attendu = '1234'; 
 
 if (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW']) || 
     $_SERVER['PHP_AUTH_USER'] !== $admin_attendu || $_SERVER['PHP_AUTH_PW'] !== $mdp_attendu) {

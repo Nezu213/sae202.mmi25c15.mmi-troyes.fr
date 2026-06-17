@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once 'model/reservation_model.php';
 include_once("view/header.php");
 
@@ -39,104 +41,76 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<main class="page-reservation">
+<main class="page-reservation-unique">
+    <div class="container-reservation">
+        
+        <h1 class="titre-reservation">RÉSERVATION</h1>
 
-    <h2>Réservation</h2>
-
-    <?php if ($success): ?>
-
-        <div class="message-succes cadre-ambiance">
-            <p>Votre réservation a bien été enregistrée !<br>
-            Vous recevrez une confirmation à l'adresse indiquée.</p>
-            <a href="profil.php" class="btn-reserver" style="display:inline-block;margin-top:25px;">Voir mes réservations</a>
-        </div>
-
-    <?php else: ?>
-
-        <?php if ($error): ?>
-            <p class="error-message"><?php echo htmlspecialchars($error); ?></p>
-        <?php endif; ?>
-
-        <div class="conteneur-reservation">
-
-            <div class="reservation-ambiance">
-                <div class="cadre-ambiance">
-                    <p class="storytelling">
-                        Une nuit. Un casino clandestin.<br>
-                        Huit convives autour d'une table qui ne savent pas encore ce qui les attend...
-                    </p>
-                    <p class="storytelling" style="margin-top:1.2rem;">
-                        Réservez votre table, constituez votre groupe, choisissez votre niveau — et que la nuit commence.
-                    </p>
-                    <p class="slogan-accueil" style="margin-top:1.5rem;">
-                        Alors, qui trouvera l'assassin… qui réussira à sortir vivant ?
-                    </p>
-                </div>
+        <?php if ($success): ?>
+            <div class="message-succes">
+                <p class="success-title">✨ SÉLECTION ENREGISTRÉE</p>
+                <p class="success-text">Votre session d'escape game clandestin est réservée.<br>Un e-mail de confirmation vient d'être envoyé au responsable.</p>
+                <a href="profil.php" class="btn-profil-ret">VOIR MON PROFIL</a>
             </div>
+        <?php else: ?>
 
-            <div class="reservation-formulaire">
-                <div class="cadre-formulaire-reservation">
-                    <h3>Faites vos jeux</h3>
+            <?php if ($error): ?>
+                <div class="msg-error-box">
+                    ❌ <?php echo htmlspecialchars($error); ?>
+                </div>
+            <?php endif; ?>
 
-                    <form method="POST" action="reservation.php" class="form-reservation">
-
-                        <div class="form-ligne-double">
-                            <div class="form-groupe">
-                                <label for="nom">Nom *</label>
-                                <input type="text" id="nom" name="nom"
-                                       value="<?php echo htmlspecialchars($_POST['nom'] ?? ''); ?>"
-                                       placeholder="Votre nom" required>
-                            </div>
-                            <div class="form-groupe">
-                                <label for="date">Date *</label>
-                                <input type="date" id="date" name="date"
-                                       value="<?php echo htmlspecialchars($_POST['date'] ?? ''); ?>"
-                                       min="<?php echo date('Y-m-d'); ?>" required>
-                            </div>
+            <div class="wrapper-cadre-reservation-epines">
+                <form method="POST" action="reservation.php" autocomplete="off">
+                    
+                    <div class="form-ligne-double">
+                        <div class="input-group-reservation">
+                            <label for="nom">Nom</label>
+                            <input type="text" id="nom" name="nom" value="<?php echo htmlspecialchars($_POST['nom'] ?? ''); ?>" class="input-moyen" required>
                         </div>
-
-                        <div class="form-groupe">
-                            <label for="email">E-mail *</label>
-                            <input type="email" id="email" name="email"
-                                   value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>"
-                                   placeholder="votre@email.com" required>
+                        <div class="input-group-reservation">
+                            <label for="date">Date</label>
+                            <input type="date" id="date" name="date" value="<?php echo htmlspecialchars($_POST['date'] ?? ''); ?>" min="<?php echo date('Y-m-d'); ?>" class="input-moyen" required>
                         </div>
+                    </div>
 
-                        <div class="form-groupe">
-                            <label for="nom_groupe">Nom de groupe <span class="form-hint">(optionnel)</span></label>
-                            <input type="text" id="nom_groupe" name="nom_groupe"
-                                   value="<?php echo htmlspecialchars($_POST['nom_groupe'] ?? ''); ?>"
-                                   placeholder="Nom de votre équipe">
-                        </div>
+                    <div class="input-group-reservation full-width">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>" class="input-grand" required>
+                    </div>
 
-                        <div class="form-groupe">
-                            <label for="nb_joueurs">Nombre de participants * <span class="form-hint">(8 à 10)</span></label>
-                            <input type="number" id="nb_joueurs" name="nb_joueurs"
-                                   value="<?php echo htmlspecialchars($_POST['nb_joueurs'] ?? ''); ?>"
-                                   min="8" max="10" placeholder="8 – 10" required>
-                        </div>
+                    <div class="input-group-reservation full-width">
+                        <label for="nom_groupe">Nom de groupe</label>
+                        <input type="text" id="nom_groupe" name="nom_groupe" value="<?php echo htmlspecialchars($_POST['nom_groupe'] ?? ''); ?>" class="input-grand">
+                    </div>
 
-                        <div class="form-groupe">
-                            <label for="mode">Mode de jeu *</label>
-                            <select id="mode" name="mode" required>
-                                <option value="" disabled <?php echo empty($_POST['mode']) ? 'selected' : ''; ?>>
-                                    -- Choisissez votre niveau --
-                                </option>
+                    <div class="input-group-reservation full-width">
+                        <label for="nb_joueurs">Nombre de participants</label>
+                        <input type="number" id="nb_joueurs" name="nb_joueurs" value="<?php echo htmlspecialchars($_POST['nb_joueurs'] ?? ''); ?>" min="8" max="10" class="input-grand" required>
+                    </div>
+
+                    <div class="input-group-reservation full-width">
+                        <label for="mode">Mode de jeu</label>
+                        <div class="select-wrapper">
+                            <select id="mode" name="mode" class="select-grand" required>
+                                <option value="" disabled <?php echo empty($_POST['mode']) ? 'selected' : ''; ?>>-- Choisissez votre niveau --</option>
                                 <option value="facile"        <?php echo (($_POST['mode'] ?? '') === 'facile')        ? 'selected' : ''; ?>>Facile</option>
                                 <option value="intermediaire" <?php echo (($_POST['mode'] ?? '') === 'intermediaire') ? 'selected' : ''; ?>>Intermédiaire</option>
                                 <option value="hardcore"      <?php echo (($_POST['mode'] ?? '') === 'hardcore')      ? 'selected' : ''; ?>>Hardcore</option>
                             </select>
+                            <span class="select-arrow">▼</span>
                         </div>
+                    </div>
 
-                        <button type="submit" class="btn-reserver">Réserver</button>
+                    <div class="submit-block">
+                        <button type="submit" class="btn-reserver-casino">RÉSERVER</button>
+                    </div>
 
-                    </form>
-                </div>
+                </form>
             </div>
+        <?php endif; ?>
 
-        </div>
-    <?php endif; ?>
-
+    </div>
 </main>
 
 <?php include_once("view/footer.php"); ?>

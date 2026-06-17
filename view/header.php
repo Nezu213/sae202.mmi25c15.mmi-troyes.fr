@@ -1,10 +1,21 @@
 <?php
-// On démarre la session seulement si elle n'est pas déjà active.
-// C'est la première chose à faire pour éviter les erreurs "headers already sent".
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-include_once("view/bdd.php"); 
+include_once(__DIR__ . "/bdd.php"); 
+
+$page = basename($_SERVER['PHP_SELF']);
+$body_class = ''; 
+
+if ($page == 'index.php') {
+    $body_class = 'home';
+} elseif ($page == 'inscription.php') {
+    $body_class = 'page-inscription-bg';
+} elseif ($page == 'connexion.php') {
+    $body_class = 'page-connexion-bg';
+} elseif ($page == 'reservation.php') {
+    $body_class = 'page-reservation-bg';
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -17,15 +28,10 @@ include_once("view/bdd.php");
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
-<?php
-$page = basename($_SERVER['PHP_SELF']);
-$body_class = ($page == 'index.php') ? 'home' : '';
-?>
 <body class="<?php echo $body_class; ?>">
 
 <div id="preloader">
    <img src="images/night_casino.png" alt="Logo Night Casino" class="preloader-logo">
-
     <nav class="preloader-nav">
         <a href="index.php">Accueil</a>
         <a href="concept.php">Concept</a>
@@ -37,32 +43,42 @@ $body_class = ($page == 'index.php') ? 'home' : '';
 <header>
     <div class="logo">
         <a href="index.php">
-            <img src="images/night_casino.png" alt="Logo Night Casino">
+            <picture>
+                <source media="(max-width: 768px)" srcset="images/logo_mobil.png">
+                <img src="images/night_casino.png" alt="Logo Night Casino" class="header-logo-img">
+            </picture>
         </a>
-    </div>
-    <nav>
+    </div>    
+    
+    <button class="hamburger-btn" aria-label="Menu de navigation">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </button>
+
+    <nav class="nav-container">
         <ul class="nav-icones">
             <li>
                 <a href="index.php" class="lien-icone" title="Accueil">
-                    <img src="images/icone_accueil.png" alt="Accueil" class="icon-nav">
+                    <img src="images/accueil.png" alt="Accueil" class="icon-nav">
                     <span class="tooltip-nav">Accueil</span>
                 </a>
             </li>
             <li>
                 <a href="concept.php" class="lien-icone" title="Concept">
-                    <img src="images/icone_concept.png" alt="Concept" class="icon-nav">
+                    <img src="images/concept.png" alt="Concept" class="icon-nav">
                     <span class="tooltip-nav">Concept</span>
                 </a>
             </li>
             <li>
                 <a href="infos_pratiques.php" class="lien-icone" title="Informations pratiques">
-                    <img src="images/icone_infos.png" alt="Informations pratiques" class="icon-nav">
+                    <img src="images/loupe.png" alt="Informations pratiques" class="icon-nav">
                     <span class="tooltip-nav">Informations</span>
                 </a>
             </li>
             <li class="profile-menu">
                 <a href="#" class="lien-icone" title="Connexion / Profil">
-                    <img src="images/icone_connexion.png" alt="Connexion" class="icon-nav">
+                    <img src="images/profil.png" alt="Connexion" class="icon-nav">
                     <span class="tooltip-nav">Connexion</span>
                 </a>
                 <div class="dropdown-content">
@@ -88,16 +104,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const profileMenu = document.querySelector('.profile-menu');
     if (profileMenu) {
         const dropdown = profileMenu.querySelector('.dropdown-content');
-
         profileMenu.addEventListener('click', function(event) {
-            // S'assurer que le clic vient bien de l'icône principale et non d'un lien dans le dropdown
             if (event.target.closest('a.lien-icone')) {
                 event.preventDefault();
                 dropdown.classList.toggle('show');
             }
         });
-
-        // Fermer le menu si on clique n'importe où ailleurs sur la page
         window.addEventListener('click', function(event) {
             if (!profileMenu.contains(event.target)) {
                 if (dropdown.classList.contains('show')) {

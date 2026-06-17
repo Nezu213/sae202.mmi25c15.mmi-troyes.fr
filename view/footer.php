@@ -1,25 +1,22 @@
 <footer>
-    <img src="images/all_agency.png" alt="Logo All Agency" class="logo-agence">
-    <p>© 2026 - Tous droits réservés. Projet IUT - SAE 202</p>
-    <div class="footer-liens">
-        <a href="mentions_legales.php">Mentions Légales</a>
+    <div class="footer-container">
+        <!-- Logo Night Casino -->
+        <div class="footer-item">
+            <img src="images/night_casino.png" alt="Logo" class="logo-footer">
+        </div>
+
+        <!-- Tes liens -->
+        <div class="footer-item">
+            <a href="#" ><img class="footer-icon" src="images/insta_dore.svg" alt="Instagram"> </a>
+            <a href="#" ><img class="footer-icon" src="images/tiktok_dore.svg" alt="TikTok"> </a>
+            <a href="#" ><img class="footer-icon" src="images/facebook_dore.svg" alt="Facebook"> </a>
+            <a href="contact.php">CONTACT</a>
+            <a href="mentions_legales.php">MENTIONS LÉGALES</a>
+        </div>
+
+        <!-- Logo Agence -->
+        <div class="footer-item">
+            <img src="images/all_agency.png" alt="All Agency" class="logo-agence">
+        </div>
     </div>
 </footer>
-
-<script>
-window.addEventListener('load', function() {
-    // On vérifie si le body n'a PAS la classe 'home'
-    if (!document.body.classList.contains('home')) {
-        const preloader = document.getElementById('preloader');
-        if (preloader) {
-            // On attend un petit peu pour que l'effet soit visible
-            setTimeout(function() {
-                preloader.classList.add('hidden');
-            }, 500); // 500ms de délai
-        }
-    }
-});
-</script>
-
-</body>
-</html>

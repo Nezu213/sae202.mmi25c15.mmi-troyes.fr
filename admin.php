@@ -143,6 +143,7 @@ $avis_a_valider = get_avis_a_valider();
             </tbody>
         </table>
     </section>
+        <script src="js/script.js"></script>
 </main>
 
 <?php include_once("view/footer.php"); ?>

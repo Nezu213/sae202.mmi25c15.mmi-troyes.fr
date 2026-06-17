@@ -1,5 +1,4 @@
 <?php
-// controller/profil_controller.php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -14,14 +13,39 @@ require_once '../view/bdd.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = (int)$_SESSION['user_id'];
+
+    // ACCORD SUPPRESSION COMPTE : Si le bouton "delete_account" a été cliqué
+    if (isset($_POST['delete_account'])) {
+        try {
+            // 1. Suppression des réservations liées à l'équipe pour nettoyer la table
+            $del_res = $link->prepare("DELETE FROM reservations WHERE user_id = ?");
+            $del_res->execute([$user_id]);
+
+            // 2. Suppression des avis soumis par l'équipe
+            $del_avis = $link->prepare("DELETE FROM avis WHERE user_id = ?");
+            $del_avis->execute([$user_id]);
+
+            // 3. Suppression de la ligne utilisateur
+            $query = $link->prepare("DELETE FROM user WHERE user_id = ?");
+            $query->execute([$user_id]);
+
+            // 4. Destruction de la session
+            session_destroy();
+
+            header('Location: ../index.php?account=deleted');
+            exit();
+        } catch (PDOException $e) {
+            die("Erreur lors de la suppression de votre compte : " . $e->getMessage());
+        }
+    }
+
+    // TRAITEMENT DE MODIFICATION CLASSIQUE
     $pseudo  = trim($_POST['pseudo'] ?? '');
     $email   = trim($_POST['email'] ?? '');
     $tel     = trim($_POST['telephone'] ?? '');
 
     if (!empty($pseudo) && !empty($email) && !empty($tel)) {
         try {
-            // Mise à jour de la table 'user'
-            // On s'adapte à la structure avec ou sans accent pour éviter tout crash
             $query = "UPDATE user SET user_pseudo = :pseudo, user_email = :email, user_telephone = :tel WHERE user_id = :id";
             $stmt = $link->prepare($query);
             $stmt->execute([
@@ -31,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':id'     => $user_id
             ]);
 
-            // Synchronisation de la session active pour l'en-tête du site
             $_SESSION['pseudo'] = $pseudo;
             $_SESSION['user_email'] = $email;
 
@@ -48,3 +71,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Location: ../profil.php');
     exit();
 }
+?>

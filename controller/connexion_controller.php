@@ -1,21 +1,23 @@
 <?php
-// On inclut directement la BDD qui gère déjà le session_start() proprement
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once '../view/bdd.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
-    $email = trim($_POST['email']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['pseudo'])) {
+    $pseudo = trim($_POST['pseudo']);
+    $password_saisi = $_POST['password'] ?? '';
 
-    $query = "SELECT * FROM user WHERE user_email = :email";
-    $stmt = $link->prepare($query);
-    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-    $stmt->execute();
+    // Recherche par pseudo dans la table user
+    $query = $link->prepare("SELECT * FROM user WHERE user_pseudo = ?");
+    $query->execute([$pseudo]);
+    $user = $query->fetch(PDO::FETCH_ASSOC);
 
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($user) {
-        // Stockage direct des données dans la session active
+    // Vérification avec password_verify sur la colonne user_mot_de_passe
+    if ($user && password_verify($password_saisi, $user['user_mot_de_passe'])) {
+        
         $_SESSION['user_id'] = $user['user_id'];
-        $_SESSION['pseudo'] = $user['user_pseudo'] ?? 'Admin';
+        $_SESSION['pseudo'] = $user['user_pseudo'];
         $_SESSION['user_email'] = $user['user_email'];
 
         if ($user['user_email'] === 'marilou.londole-lokoola@etudiant.univ-reims.fr') {
@@ -25,21 +27,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
             $_SESSION['role'] = strtolower(trim($role_bdd));
         }
 
-        // On force l'écriture sur le disque avant de rediriger
         session_write_close();
 
+        // Redirection adaptée à l'emplacement de ton dossier d'administration
         if ($_SESSION['role'] === 'admin') {
-            header('Location: ../admin.php');
+            header('Location: ../gestion/index.php');
             exit();
         } else {
             header('Location: ../profil.php');
             exit();
         }
     } else {
-        header('Location: ../connexion.php?error=not_found');
+        header('Location: ../connexion.php?error=1');
         exit();
     }
 } else {
     header('Location: ../connexion.php');
     exit();
 }
+?>
