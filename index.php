@@ -9,6 +9,39 @@ unset($_SESSION['avis_msg']);
 include_once("view/header.php");
 ?>
 
+<style>
+/* Style spécifique pour le système de notation par piques */
+.rating-piques-container {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0;
+}
+
+.rating-piques-container input[type="radio"] {
+    display: none;
+}
+
+.rating-piques-container label {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    background-image: url('images/pique.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.2s ease;
+}
+
+.rating-piques-container label:hover,
+.rating-piques-container label:hover ~ label,
+.rating-piques-container input[type="radio"]:checked ~ label {
+    background-image: url('images/pique_dore.png');
+    transform: scale(1.1);
+}
+</style>
+
 <main>
     <h2>Bienvenue à l'Événement de l'Année</h2>
     <p style="text-align:center;">Découvrez notre escape game nocturne immersif.</p>
@@ -31,8 +64,9 @@ include_once("view/header.php");
     <section class="section-video">
         <h3>Bande-annonce officielle</h3>
         <div class="conteneur-video-169">
-            <video controls poster="images/.png" width="100%">
-                <source src="videos/night_casino_promo.mp4" type="video/mp4">
+            <video controls width="100%">
+                <source src="videos/video_nightCasino.webm" type="video/webm">
+                <source src="videos/video_nightCasino.mp4" type="video/mp4">
                 Votre navigateur ne prend pas en charge la lecture de cette vidéo.
             </video>
         </div>
@@ -105,26 +139,17 @@ include_once("view/header.php");
         </div>
     </section>
 
-    <!-- ===========================================
-         SECTION AVIS (Livre d'Or)
-    ============================================ -->
     <section class="section-livre-or">
+        <?php if (!empty($avis_msg)): ?>
+            <p style="text-align: center; color: #ecd499; font-weight: bold; margin-bottom: 20px;"><?= htmlspecialchars($avis_msg) ?></p>
+        <?php endif; ?>
+
         <div class="liste-avis-maquette">
             <?php if (!empty($liste_avis)): ?>
                 <?php foreach ($liste_avis as $un_avis): 
-                    $note = intval($un_avis['note'] ?? $un_avis['nb_etoiles'] ?? 5);
-                    $commentaire = htmlspecialchars($un_avis['commentaire'] ?? $un_avis['texte'] ?? '');
-
-                    $pseudo = '';
-                    if (!empty($un_avis['pseudo'])) { $pseudo = $un_avis['pseudo']; }
-                    elseif (!empty($un_avis['nom'])) { $pseudo = $un_avis['nom']; }
-                    elseif (!empty($un_avis['prenom'])) { $pseudo = $un_avis['prenom']; }
-                    elseif (!empty($un_avis['login'])) { $pseudo = $un_avis['login']; }
-                    elseif (!empty($un_avis['username'])) { $pseudo = $un_avis['username']; }
-                    elseif (!empty($un_avis['id_utilisateur'])) { $pseudo = "Joueur #" . $un_avis['id_utilisateur']; }
-                    else { $pseudo = 'Joueur'; }
-
-                    $pseudo = htmlspecialchars($pseudo);
+                    $note = intval($un_avis['note'] ?? 5);
+                    $commentaire = htmlspecialchars($un_avis['commentaire'] ?? '');
+                    $pseudo = htmlspecialchars($un_avis['user_pseudo'] ?? 'Joueur');
                 ?>
                     <div class="item-avis-unique">
                         <div class="entete-avis-ligne">
@@ -145,6 +170,34 @@ include_once("view/header.php");
                 <?php endforeach; ?>
             <?php else: ?>
                 <p style="text-align: center; color: #ecd499; font-style: italic;">Aucun avis pour le moment.</p>
+            <?php endif; ?>
+        </div>
+
+        <div class="formulaire-notation-index" style="margin-top: 40px;">
+            <?php if (isset($_SESSION['pseudo'])): ?>
+                <form action="controller/avis_controller.php" method="POST" style="max-width: 600px; margin: 0 auto; padding: 20px; background: #1a0f0f; border: 1px solid #ecd499; border-radius: 8px;">
+                    <h3 style="color: #ecd499; text-align: center; margin-top: 0;">Laissez votre avis</h3>
+                    
+                    <div class="rating-piques-container">
+                        <input type="radio" id="pique5" name="note" value="5" checked /><label for="pique5" title="5 piques"></label>
+                        <input type="radio" id="pique4" name="note" value="4" /><label for="pique4" title="4 piques"></label>
+                        <input type="radio" id="pique3" name="note" value="3" /><label for="pique3" title="3 piques"></label>
+                        <input type="radio" id="pique2" name="note" value="2" /><label for="pique2" title="2 piques"></label>
+                        <input type="radio" id="pique1" name="note" value="1" /><label for="pique1" title="1 pique"></label>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <textarea name="commentaire" rows="4" required style="width: 100%; padding: 10px; background: #331a1a; color: #fff; border: 1px solid #ecd499; border-radius: 4px; resize: none;" placeholder="Écrivez votre commentaire ici..."></textarea>
+                    </div>
+
+                    <button type="submit" style="width: 100%; padding: 10px; background: #ecd499; color: #1a0f0f; font-weight: bold; border: none; cursor: pointer;">
+                        Envoyer
+                    </button>
+                </form>
+            <?php else: ?>
+                <p style="text-align: center; color: #ecd499; font-style: italic;">
+                    Il faut se connecter pour pouvoir mettre un avis.
+                </p>
             <?php endif; ?>
         </div>
     </section>
